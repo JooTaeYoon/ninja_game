@@ -7,10 +7,18 @@ const key = {
   },
 };
 
+const bulletComProp = {
+  arr: [],
+  launch: false,
+};
+
 let hero;
 
 const renderGame = () => {
   hero.keyMotion();
+  bulletComProp.arr.forEach((arr, i) => {
+    arr.moveBullet();
+  });
   requestAnimationFrame(renderGame);
 };
 
@@ -46,7 +54,6 @@ const init = () => {
   loadImg(); // 이미지 로드 함수
   renderGame(); // 이미지 render 함수
   windowEvent(); // key 이벤트 함수
-  console.log(hero.position());
 };
 
 window.onload = () => {
