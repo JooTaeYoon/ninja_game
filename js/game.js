@@ -4,6 +4,8 @@ const key = {
     37: 'left',
     39: 'right',
     88: 'attack',
+    38: 'up',
+    32: 'up',
   },
 };
 
@@ -14,8 +16,13 @@ const bulletComProp = {
 
 let hero;
 
+const gameBackground = {
+  gameBox: document.querySelector('.game'),
+};
+
 const renderGame = () => {
   hero.keyMotion();
+  setGameBackground();
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
   });
@@ -27,6 +34,11 @@ const gameProp = {
   screenHeight: window.innerHeight,
 };
 
+const setGameBackground = () => {
+  let parallaxValue = Math.min(0, (hero.moveX - gameProp.screenWidth / 3) * -1);
+  gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
+};
+
 const windowEvent = () => {
   window.addEventListener('keydown', (e) => {
     key.keyDown[key.keyValue[e.which]] = true;
@@ -34,6 +46,12 @@ const windowEvent = () => {
 
   window.addEventListener('keyup', (e) => {
     key.keyDown[key.keyValue[e.which]] = false;
+  });
+
+  window.addEventListener('resize', (e) => {
+    gameProp.screenWidth = window.innerWidth;
+    gameProp.screenHeight = window.innerHeight;
+    console.log('바뀜 : ', e);
   });
 };
 
