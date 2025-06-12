@@ -3,7 +3,7 @@ class Hero {
     this.el = document.querySelector(el);
     this.moveX = 0;
     this.moveY = 0;
-    this.speed = 16;
+    this.speed = 11;
     this.direction = 'right';
   }
 
@@ -11,7 +11,9 @@ class Hero {
     if (key.keyDown['left']) {
       this.el.classList.add('flip');
       this.el.classList.add('run');
-      this.moveX = this.moveX - this.speed;
+
+      this.moveX = this.moveX <= 0 ? 0 : this.moveX - this.speed;
+
       this.direction = 'left';
     } else if (key.keyDown['right']) {
       this.el.classList.add('run');
@@ -75,7 +77,10 @@ class Bullet {
 
   init() {
     this.bulletDirection = hero.direction === 'left' ? 'left' : 'right';
-    this.x = hero.moveX + hero.size().width;
+    this.x =
+      this.bulletDirection === 'right'
+        ? hero.moveX + hero.size().width / 2
+        : hero.moveX - hero.size().width / 2;
     this.y = hero.position().bottom - hero.size().height / 2;
     this.distance = this.x;
 
@@ -115,5 +120,22 @@ class Bullet {
     ) {
       this.el.remove();
     }
+  }
+}
+
+class Monster {
+  constructor() {
+    this.parentNode = document.querySelector('.game');
+    this.el = document.createElement('div');
+    this.el.className = 'monster_box';
+    this.elChildren = document.createElement('div');
+    this.elChildren.className = 'monster';
+
+    this.init();
+  }
+
+  init() {
+    this.el.appendChild(this.elChildren);
+    this.parentNode.appendChild(this.el);
   }
 }

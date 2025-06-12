@@ -15,6 +15,7 @@ const bulletComProp = {
 };
 
 let hero;
+let monster;
 
 const gameBackground = {
   gameBox: document.querySelector('.game'),
@@ -68,7 +69,8 @@ const loadImg = () => {
 };
 
 const init = () => {
-  hero = new Hero('.hero');
+  hero = new Hero('.hero'); // Hero 객체 생성
+  monster = new Monster();
   loadImg(); // 이미지 로드 함수
   renderGame(); // 이미지 render 함수
   windowEvent(); // key 이벤트 함수
