@@ -20,9 +20,14 @@ class Hero {
       this.el.classList.remove('flip');
       this.moveX = this.moveX + this.speed;
       this.direction = 'right';
-    } else if (key.keyDown['up']) {
-      this.moveY = this.moveY + this.speed;
     }
+
+    /*
+1. 키를 누른다
+2. y좌표에 speed값을 더해준다
+3. 그리고 중력값을 뺀다.
+4. 땅에 닿았는지 확인한다.
+*/
 
     if (!key.keyDown['left'] && !key.keyDown['right']) {
       this.el.classList.remove('run');
@@ -40,7 +45,7 @@ class Hero {
       bulletComProp.launch = false;
     }
 
-    this.el.parentNode.style.transform = `translateX(${this.moveX}px)`;
+    this.el.parentNode.style.transform = `translate(${this.moveX}px, ${this.moveY}px)`;
   }
 
   position() {
@@ -115,10 +120,27 @@ class Bullet {
 
   crashBullet() {
     if (
+      this.position().left > monster.position().left &&
+      this.position().right < monster.position().right
+    ) {
+      this.el.remove();
+      for (let i = 0; i < bulletComProp.arr.length; i++) {
+        if (bulletComProp.arr[i] === this) {
+          bulletComProp.arr.splice(i, 1);
+        }
+      }
+    }
+
+    if (
       this.position().left > gameProp.screenWidth ||
       this.position().right < 0
     ) {
       this.el.remove();
+      for (let i = 0; i < bulletComProp.arr.length; i++) {
+        if (bulletComProp.arr[i] === this) {
+          bulletComProp.arr.splice(i, 1);
+        }
+      }
     }
   }
 }
@@ -137,5 +159,17 @@ class Monster {
   init() {
     this.el.appendChild(this.elChildren);
     this.parentNode.appendChild(this.el);
+  }
+
+  position() {
+    return {
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHeight - this.el.getBoundingClientRect().top,
+      bottom:
+        gameProp.screenHeight -
+        this.el.getBoundingClientRect().top -
+        this.el.getBoundingClientRect().height,
+    };
   }
 }
