@@ -163,6 +163,8 @@ class Monster {
     this.positionX = positionX;
     this.defaultHpValue = hp;
     this.progress = 0;
+    this.moveX = 0;
+    this.speed = 1;
 
     this.init();
   }
@@ -205,5 +207,26 @@ class Monster {
       allMonsterComProp.arr.splice(j, 1);
       console.log('after: ', allMonsterComProp.arr);
     }, 200);
+  }
+
+  moveMonster() {
+    if (
+      this.moveX +
+        this.positionX +
+        this.el.offsetWidth +
+        hero.position().left -
+        hero.moveX <=
+      0
+    ) {
+      this.moveX =
+        hero.moveX -
+        this.positionX +
+        gameProp.screenWidth -
+        hero.position().left;
+    } else {
+      this.moveX -= this.speed;
+    }
+
+    this.el.style.transform = `translate(${this.moveX}px)`;
   }
 }

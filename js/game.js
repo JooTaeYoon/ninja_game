@@ -30,6 +30,10 @@ const renderGame = () => {
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
   });
+  allMonsterComProp.arr.forEach((arr, i) => {
+    arr.moveMonster();
+  });
+
   requestAnimationFrame(renderGame);
 };
 
@@ -74,7 +78,7 @@ const loadImg = () => {
 const init = () => {
   hero = new Hero('.hero'); // Hero 객체 생성
   allMonsterComProp.arr[0] = new Monster(500, 7777);
-  allMonsterComProp.arr[1] = new Monster(900, 5555);
+  allMonsterComProp.arr[1] = new Monster(10000, 5555);
   loadImg(); // 이미지 로드 함수
   renderGame(); // 이미지 render 함수
   windowEvent(); // key 이벤트 함수
