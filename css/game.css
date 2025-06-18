@@ -134,3 +134,26 @@
   background-size: 2242px 294px;
   animation: monster_run 1s infinite steps(8);
 }
+
+.monster_box .hp {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
+  height: 10px;
+  border: 2px solid #000;
+  transform: translateY(-100%);
+}
+
+.monster_box.remove {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.monster_box .hp span {
+  display: block;
+  height: 100%;
+  background: red;
+  transition: width 0.3s linear;
+  width: 100%;
+}

@@ -5,6 +5,7 @@ class Hero {
     this.moveY = 0;
     this.speed = 11;
     this.direction = 'right';
+    this.attackDamage = 1000;
   }
 
   keyMotion() {
@@ -119,15 +120,18 @@ class Bullet {
   }
 
   crashBullet() {
-    if (
-      this.position().left > monster.position().left &&
-      this.position().right < monster.position().right
-    ) {
-      this.el.remove();
-      for (let i = 0; i < bulletComProp.arr.length; i++) {
-        if (bulletComProp.arr[i] === this) {
-          bulletComProp.arr.splice(i, 1);
+    for (let j = 0; j < allMonsterComProp.arr.length; j++) {
+      if (
+        this.position().left > allMonsterComProp.arr[j].position().left &&
+        this.position().right < allMonsterComProp.arr[j].position().right
+      ) {
+        this.el.remove();
+        for (let i = 0; i < bulletComProp.arr.length; i++) {
+          if (bulletComProp.arr[i] === this) {
+            bulletComProp.arr.splice(i, 1);
+          }
         }
+        allMonsterComProp.arr[j].updateHp(j);
       }
     }
 
@@ -146,19 +150,29 @@ class Bullet {
 }
 
 class Monster {
-  constructor() {
+  constructor(positionX, hp) {
     this.parentNode = document.querySelector('.game');
     this.el = document.createElement('div');
     this.el.className = 'monster_box';
     this.elChildren = document.createElement('div');
     this.elChildren.className = 'monster';
+    this.hpNode = document.createElement('div');
+    this.hpNode.className = 'hp';
+    this.hpValue = hp;
+    this.hpInner = document.createElement('span');
+    this.positionX = positionX;
+    this.defaultHpValue = hp;
+    this.progress = 0;
 
     this.init();
   }
 
   init() {
+    this.hpNode.appendChild(this.hpInner);
+    this.el.appendChild(this.hpNode);
     this.el.appendChild(this.elChildren);
     this.parentNode.appendChild(this.el);
+    this.el.style.left = this.positionX + 'px';
   }
 
   position() {
@@ -171,5 +185,25 @@ class Monster {
         this.el.getBoundingClientRect().top -
         this.el.getBoundingClientRect().height,
     };
+  }
+
+  updateHp(j) {
+    this.hpValue = Math.max(0, this.hpValue - hero.attackDamage);
+    this.progress = (this.hpValue / this.defaultHpValue) * 100;
+    this.el.children[0].children[0].style.width = this.progress + '%';
+
+    if (this.hpValue === 0) {
+      this.dead(j);
+    }
+  }
+
+  dead(j) {
+    this.el.classList.add('remove');
+    console.log('before: ', allMonsterComProp.arr);
+    setTimeout(() => {
+      this.el.remove();
+      allMonsterComProp.arr.splice(j, 1);
+      console.log('after: ', allMonsterComProp.arr);
+    }, 200);
   }
 }
