@@ -60,6 +60,16 @@
   }
 }
 
+@keyframes hero_crash {
+  from {
+    background-position-x: 0px;
+  }
+
+  to {
+    background-position-x: -299px;
+  }
+}
+
 .hero_box {
   position: fixed;
   left: 0;
@@ -193,4 +203,17 @@
   height: 100%;
   background-color: red;
   transition: width 0.3s linear;
+}
+
+.hero_box .hero.crash {
+  background-image: url('../ggang_game/lib/images/ninja_crash.png');
+  background-size: 299px 182px;
+  animation: hero_crash 0.3s 1 steps(2);
+}
+
+.hero_box .hero.dead {
+  background-image: url('../ggang_game/lib/images/ninja_dead.png');
+  background-size: 150px 182px;
+  animation: none;
+  transform: rotate(-100deg);
 }

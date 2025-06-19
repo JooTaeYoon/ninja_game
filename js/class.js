@@ -6,6 +6,9 @@ class Hero {
     this.speed = 11;
     this.direction = 'right';
     this.attackDamage = 1000;
+    this.hpProgress = 0;
+    this.hpValue = 10000;
+    this.defaultHpValue = this.hpValue;
   }
 
   keyMotion() {
@@ -65,6 +68,28 @@ class Hero {
       width: this.el.offsetWidth,
       height: this.el.offsetHeight,
     };
+  }
+
+  updateHp(damage) {
+    this.hpValue = Math.max(0, this.hpValue - damage);
+    this.hpProgress = (this.hpValue / this.defaultHpValue) * 100;
+    const heroHpBox = document.querySelector('.state_box .hp span');
+    heroHpBox.style.width = this.hpProgress + '%';
+    this.crash();
+    if (this.hpProgress === 0) this.dead();
+  }
+
+  crash() {
+    this.el.classList.add('crash');
+    setTimeout(() => {
+      this.el.classList.remove('crash');
+    }, 400);
+  }
+
+  dead() {
+    console.log('dead');
+    this.el.classList.remove('crash');
+    this.el.classList.add('dead');
   }
 }
 
@@ -165,6 +190,7 @@ class Monster {
     this.progress = 0;
     this.moveX = 0;
     this.speed = 1;
+    this.crashDamage = 100;
 
     this.init();
   }
@@ -228,5 +254,18 @@ class Monster {
     }
 
     this.el.style.transform = `translate(${this.moveX}px)`;
+
+    this.crash();
+  }
+
+  crash() {
+    let rightDiff = 30;
+    let leftDiff = 90;
+    if (
+      hero.position().right - rightDiff > this.position().left &&
+      hero.position().left + leftDiff < this.position().right
+    ) {
+      hero.updateHp(this.crashDamage);
+    }
   }
 }
