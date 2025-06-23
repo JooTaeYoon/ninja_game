@@ -217,3 +217,76 @@
   animation: none;
   transform: rotate(-100deg);
 }
+
+.game_over {
+  position: fixed;
+  display: none;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.game_over p {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 150px;
+  font-family: monospace;
+}
+
+.game_over.active {
+  display: block;
+}
+
+.text_damage {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  font-family: 'roboto';
+  font-size: 110px;
+  background: linear-gradient(
+    to bottom,
+    rgba(196, 41, 30, 1) 0%,
+    rgba(230, 89, 191, 1) 100%
+  );
+  -webkit-text-stroke: 5px rgba(255, 255, 255, 0.7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textDamage 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes textDamage {
+  0% {
+    opacity: 0;
+    bottom: 0;
+  }
+
+  50% {
+    opacity: 1;
+    bottom: 50px;
+  }
+
+  100% {
+    opacity: 0;
+    bottom: 0;
+  }
+}
+
+.monster_box.yellow_mon .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_yellow_run.png');
+}
+
+.monster_box.pink_mon .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_pink_run.png');
+}
+
+.monster_box.green_mon .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_green_run.png');
+}

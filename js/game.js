@@ -40,6 +40,7 @@ const renderGame = () => {
 const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
+  gameOver: false,
 };
 
 const setGameBackground = () => {
@@ -49,7 +50,7 @@ const setGameBackground = () => {
 
 const windowEvent = () => {
   window.addEventListener('keydown', (e) => {
-    key.keyDown[key.keyValue[e.which]] = true;
+    if (!gameProp.gameOver) key.keyDown[key.keyValue[e.which]] = true;
   });
 
   window.addEventListener('keyup', (e) => {
@@ -59,7 +60,6 @@ const windowEvent = () => {
   window.addEventListener('resize', (e) => {
     gameProp.screenWidth = window.innerWidth;
     gameProp.screenHeight = window.innerHeight;
-    console.log('바뀜 : ', e);
   });
 };
 
@@ -77,8 +77,13 @@ const loadImg = () => {
 
 const init = () => {
   hero = new Hero('.hero'); // Hero 객체 생성
-  allMonsterComProp.arr[0] = new Monster(500, 7777);
-  allMonsterComProp.arr[1] = new Monster(10000, 5555);
+  allMonsterComProp.arr[0] = new Monster(pinkMon, gameProp.screenWidth + 700);
+  allMonsterComProp.arr[1] = new Monster(
+    yellowMon,
+    gameProp.screenWidth + 2840
+  );
+  allMonsterComProp.arr[2] = new Monster(greenMon, gameProp.screenWidth + 1000);
+
   loadImg(); // 이미지 로드 함수
   renderGame(); // 이미지 render 함수
   windowEvent(); // key 이벤트 함수
@@ -87,4 +92,9 @@ const init = () => {
 window.onload = () => {
   console.log('onload !');
   init();
+};
+
+const endGame = () => {
+  document.querySelector('.game_over').classList.add('active');
+  gameProp.gameOver = true;
 };
