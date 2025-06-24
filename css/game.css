@@ -375,3 +375,11 @@
     opacity: 0;
   }
 }
+
+.score_box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  color: #fff;
+}

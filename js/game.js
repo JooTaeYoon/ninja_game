@@ -9,6 +9,25 @@ const key = {
   },
 };
 
+const stageInfo = {
+  stage: [],
+  monster: [
+    {
+      defaultMon: greenMon,
+      bossMon: greenMonBoss,
+    },
+    {
+      defaultMon: yellowMon,
+      bossMon: yellowMonBoss,
+    },
+    {
+      defaultMon: pinkMon,
+      bossMon: pinkMonBoss,
+    },
+  ],
+  totalScore: 0,
+};
+
 const bulletComProp = {
   arr: [],
   launch: false,
@@ -42,10 +61,6 @@ const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
   gameOver: false,
-};
-
-const stageInfo = {
-  stage: [],
 };
 
 const setGameBackground = () => {

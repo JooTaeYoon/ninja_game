@@ -27,15 +27,15 @@ class Stage {
 
   callMonster() {
     this.isStart = true;
-    for (let i = 0; i <= 10; i++) {
-      if (i === 10) {
+    for (let i = 0; i <= 5; i++) {
+      if (i === 5) {
         allMonsterComProp.arr[i] = new Monster(
-          greenMonBoss,
+          stageInfo.monster[this.level].bossMon,
           gameProp.screenWidth + 800 + hero.moveX
         );
       } else {
         allMonsterComProp.arr[i] = new Monster(
-          greenMon,
+          stageInfo.monster[this.level].defaultMon,
           gameProp.screenWidth + 500 * i + hero.moveX
         );
       }
@@ -45,10 +45,15 @@ class Stage {
   clearCheck() {
     if (allMonsterComProp.arr.length === 0 && this.isStart) {
       this.isStart = false;
-      this.stageGuide('CLEAR');
-      this.stageStart();
       this.level++;
-      console.log('올킬');
+
+      if (this.level < stageInfo.monster.length) {
+        this.stageGuide('CLEAR');
+        this.stageStart();
+        hero.heroUpgrade();
+      } else {
+        this.stageGuide('ALL CLEAR');
+      }
     }
   }
 }
@@ -58,7 +63,7 @@ class Hero {
     this.el = document.querySelector(el);
     this.moveX = 0;
     this.moveY = 0;
-    this.speed = 11;
+    this.speed = 3;
     this.direction = 'right';
     this.attackDamage = 1000;
     this.hpProgress = 0;
@@ -105,6 +110,11 @@ class Hero {
     }
 
     this.el.parentNode.style.transform = `translate(${this.moveX}px, ${this.moveY}px)`;
+  }
+
+  heroUpgrade() {
+    this.speed += 10;
+    this.attackDamage += 100;
   }
 
   position() {
@@ -266,6 +276,7 @@ class Monster {
     this.moveX = 0;
     this.speed = positionX.speed;
     this.crashDamage = positionX.crashDamage;
+    this.score = positionX.score;
 
     this.init();
   }
@@ -276,6 +287,11 @@ class Monster {
     this.el.appendChild(this.elChildren);
     this.parentNode.appendChild(this.el);
     this.el.style.left = this.positionX + 'px';
+  }
+
+  setScore() {
+    stageInfo.totalScore += this.score;
+    document.querySelector('.score_box').innerHTML = stageInfo.totalScore;
   }
 
   position() {
@@ -302,11 +318,10 @@ class Monster {
 
   dead(j) {
     this.el.classList.add('remove');
-    console.log('before: ', allMonsterComProp.arr);
+    this.setScore();
     setTimeout(() => {
       this.el.remove();
       allMonsterComProp.arr.splice(j, 1);
-      console.log('after: ', allMonsterComProp.arr);
     }, 200);
   }
 
