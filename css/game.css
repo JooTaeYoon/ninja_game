@@ -383,3 +383,19 @@
   font-size: 18px;
   color: #fff;
 }
+
+.hero.slide {
+  background-image: url('../ggang_game/lib/images/ninja_slide.png');
+  background-size: 1498px 182px;
+  height: 100%;
+  animation: hero_slide 0.7s 1 steps(10);
+}
+
+@keyframes hero_slide {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position-x: -1498px;
+  }
+}

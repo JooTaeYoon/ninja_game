@@ -69,21 +69,38 @@ class Hero {
     this.hpProgress = 0;
     this.hpValue = 10000;
     this.defaultHpValue = this.hpValue;
+    this.slideSpeed = 5;
+    this.slideTime = 0;
+    this.slideMaxTime = 40;
+    this.slideDown = false;
   }
 
   keyMotion() {
     if (key.keyDown['left']) {
       this.el.classList.add('flip');
       this.el.classList.add('run');
-
       this.moveX = this.moveX <= 0 ? 0 : this.moveX - this.speed;
-
       this.direction = 'left';
     } else if (key.keyDown['right']) {
       this.el.classList.add('run');
       this.el.classList.remove('flip');
       this.moveX = this.moveX + this.speed;
       this.direction = 'right';
+    } else if (key.keyDown['slide']) {
+      if (!this.slideDown) {
+        this.el.classList.add('slide');
+
+        if (this.direction === 'right') {
+          this.moveX += this.slideSpeed * 3;
+        } else {
+          this.moveX = this.moveX <= 0 ? 0 : this.moveX - this.slideSpeed * 3;
+        }
+        if (this.slideTime > this.slideMaxTime) {
+          this.el.classList.remove('slide');
+          this.slideDown = true;
+        }
+        this.slideTime++;
+      }
     }
 
     /*
@@ -95,6 +112,12 @@ class Hero {
 
     if (!key.keyDown['left'] && !key.keyDown['right']) {
       this.el.classList.remove('run');
+    }
+
+    if (!key.keyDown['slide']) {
+      this.el.classList.remove('slide');
+      this.slideDown = false;
+      this.slideTime = 0;
     }
 
     if (key.keyDown['attack']) {
@@ -152,7 +175,6 @@ class Hero {
   }
 
   dead() {
-    console.log('dead');
     this.el.classList.remove('crash');
     this.el.classList.add('dead');
     endGame();
