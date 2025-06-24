@@ -290,3 +290,88 @@
 .monster_box.green_mon .monster {
   background-image: url('../ggang_game/lib/images/monster/monster_green_run.png');
 }
+
+.monster_box.green_mon_boss {
+  width: 450px;
+  height: 472px;
+}
+
+.monster_box.green_mon_boss .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_green_run.png');
+  background-size: 3600px 472px;
+  animation: monster_run_boss 1s infinite steps(8);
+}
+
+@keyframes monster_run_boss {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -3600px;
+  }
+}
+
+.monster_box.pink_mon_boss {
+  width: 450px;
+  height: 472px;
+}
+
+.monster_box.pink_mon_boss .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_pink_run.png');
+  background-size: 3600px 472px;
+  animation: monster_run_boss 1s infinite steps(8);
+}
+
+@keyframes monster_run_boss {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -3600px;
+  }
+}
+
+.monster_box.yellow_mon_boss {
+  width: 450px;
+  height: 472px;
+}
+
+.monster_box.yellow_mon_boss .monster {
+  background-image: url('../ggang_game/lib/images/monster/monster_yellow_run.png');
+  background-size: 3600px 472px;
+  animation: monster_run_boss 1s infinite steps(8);
+}
+
+@keyframes monster_run_boss {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -3600px;
+  }
+}
+
+.stage_box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 190;
+  translate: translate(-50%, -50%);
+  color: #fff;
+  font-size: 90px;
+  white-space: nowrap;
+  font-family: monospace;
+  animation: stageStart 1.5s ease-out;
+}
+
+@keyframes stageStart {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}

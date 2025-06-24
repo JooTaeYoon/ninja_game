@@ -15,7 +15,6 @@ const bulletComProp = {
 };
 
 let hero;
-
 const gameBackground = {
   gameBox: document.querySelector('.game'),
 };
@@ -34,6 +33,8 @@ const renderGame = () => {
     arr.moveMonster();
   });
 
+  stageInfo.stage.clearCheck();
+
   requestAnimationFrame(renderGame);
 };
 
@@ -41,6 +42,10 @@ const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
   gameOver: false,
+};
+
+const stageInfo = {
+  stage: [],
 };
 
 const setGameBackground = () => {
@@ -77,12 +82,7 @@ const loadImg = () => {
 
 const init = () => {
   hero = new Hero('.hero'); // Hero 객체 생성
-  allMonsterComProp.arr[0] = new Monster(pinkMon, gameProp.screenWidth + 700);
-  allMonsterComProp.arr[1] = new Monster(
-    yellowMon,
-    gameProp.screenWidth + 2840
-  );
-  allMonsterComProp.arr[2] = new Monster(greenMon, gameProp.screenWidth + 1000);
+  stageInfo.stage = new Stage();
 
   loadImg(); // 이미지 로드 함수
   renderGame(); // 이미지 render 함수

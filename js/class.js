@@ -1,3 +1,58 @@
+class Stage {
+  constructor() {
+    this.isStart = false;
+    this.level = 0;
+    this.stageStart();
+  }
+
+  stageStart() {
+    setTimeout(() => {
+      this.stageGuide(`START ${this.level}`);
+      this.callMonster();
+      this.isStart = true;
+    }, 2000);
+  }
+
+  stageGuide(text) {
+    this.parentNode = document.querySelector('.game_app');
+    this.textBox = document.createElement('div');
+    this.textBox.className = 'stage_box';
+    this.textNode = document.createTextNode(text);
+    this.textBox.appendChild(this.textNode);
+    this.parentNode.appendChild(this.textBox);
+    setTimeout(() => {
+      this.textBox.remove();
+    }, 1500);
+  }
+
+  callMonster() {
+    this.isStart = true;
+    for (let i = 0; i <= 10; i++) {
+      if (i === 10) {
+        allMonsterComProp.arr[i] = new Monster(
+          greenMonBoss,
+          gameProp.screenWidth + 800 + hero.moveX
+        );
+      } else {
+        allMonsterComProp.arr[i] = new Monster(
+          greenMon,
+          gameProp.screenWidth + 500 * i + hero.moveX
+        );
+      }
+    }
+  }
+
+  clearCheck() {
+    if (allMonsterComProp.arr.length === 0 && this.isStart) {
+      this.isStart = false;
+      this.stageGuide('CLEAR');
+      this.stageStart();
+      this.level++;
+      console.log('올킬');
+    }
+  }
+}
+
 class Hero {
   constructor(el) {
     this.el = document.querySelector(el);
