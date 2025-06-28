@@ -4,6 +4,7 @@ const pinkMon = {
   speed: 1,
   crashDamage: 3,
   score: 3000,
+  exp: 5000,
 };
 
 const yellowMon = {
@@ -12,6 +13,7 @@ const yellowMon = {
   speed: 3,
   crashDamage: 30,
   score: 2000,
+  exp: 2000,
 };
 
 const greenMon = {
@@ -20,6 +22,7 @@ const greenMon = {
   speed: 5,
   crashDamage: 3,
   score: 1000,
+  exp: 4000,
 };
 
 const greenMonBoss = {
@@ -28,6 +31,7 @@ const greenMonBoss = {
   speed: 3,
   crashDamage: 2,
   score: 3000,
+  exp: 9000,
 };
 
 const pinkMonBoss = {
@@ -36,6 +40,7 @@ const pinkMonBoss = {
   speed: 10,
   crashDamage: 1,
   score: 3000,
+  exp: 5000,
 };
 
 const yellowMonBoss = {
@@ -44,4 +49,5 @@ const yellowMonBoss = {
   speed: 10,
   crashDamage: 1,
   score: 3000,
+  exp: 7000,
 };

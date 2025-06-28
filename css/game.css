@@ -182,6 +182,7 @@
   padding: 10px;
 }
 .game_info .hero_state .hero_img {
+  position: relative;
   float: left;
   width: 20%;
 }
@@ -202,6 +203,21 @@
   width: 100%;
   height: 100%;
   background-color: red;
+  transition: width 0.3s linear;
+}
+
+.game_info .hero_state .state_box .exp {
+  width: 100%;
+  height: 10px;
+  border: 1px solid #000;
+  margin-top: 10px;
+}
+
+.game_info .hero_state .state_box .exp span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background-color: yellow;
   transition: width 0.3s linear;
 }
 
@@ -397,5 +413,43 @@
   }
   to {
     background-position-x: -1498px;
+  }
+}
+
+.level_box {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  font-size: 14px;
+  color: #fff;
+}
+
+.hero_box .level_up {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 200px;
+  height: 42px;
+  background-image: url('../ggang_game/lib/images/levelup.png');
+  background-size: cover;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.hero_box .level_up.active {
+  animation: level_up 2s 1 linear;
+  animation-fill-mode: both;
+}
+
+@keyframes level_up {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }

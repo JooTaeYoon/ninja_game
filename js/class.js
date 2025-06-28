@@ -73,6 +73,10 @@ class Hero {
     this.slideTime = 0;
     this.slideMaxTime = 40;
     this.slideDown = false;
+    this.level = 1;
+    this.exp = 0;
+    this.maxExp = 10000;
+    this.expProgress = 0;
   }
 
   keyMotion() {
@@ -137,7 +141,33 @@ class Hero {
 
   heroUpgrade() {
     this.speed += 10;
-    this.attackDamage += 100;
+    this.attackDamage += 500;
+  }
+
+  updateExp(exp) {
+    this.exp += exp;
+    this.expProgress = (this.exp / this.maxExp) * 100;
+    document.querySelector('.hero_state .exp span').style.width =
+      this.expProgress + '%';
+
+    if (this.exp >= this.maxExp) {
+      this.exp = 0;
+      this.levelUp();
+    }
+  }
+
+  levelUp() {
+    this.level += 1;
+    this.maxExp += this.maxExp;
+    document.querySelector('.level_box strong').innerHTML = this.level;
+    const levelGuide = document.querySelector('.level_up');
+    levelGuide.classList.add('active');
+
+    setTimeout(() => {
+      levelGuide.classList.remove('active');
+    }, 1000);
+    this.updateExp(this.exp);
+    this.heroUpgrade();
   }
 
   position() {
@@ -299,6 +329,7 @@ class Monster {
     this.speed = positionX.speed;
     this.crashDamage = positionX.crashDamage;
     this.score = positionX.score;
+    this.exp = positionX.exp;
 
     this.init();
   }
@@ -341,6 +372,7 @@ class Monster {
   dead(j) {
     this.el.classList.add('remove');
     this.setScore();
+    this.setExp();
     setTimeout(() => {
       this.el.remove();
       allMonsterComProp.arr.splice(j, 1);
@@ -379,5 +411,9 @@ class Monster {
     ) {
       hero.updateHp(this.crashDamage);
     }
+  }
+
+  setExp() {
+    hero.updateExp(this.exp);
   }
 }
