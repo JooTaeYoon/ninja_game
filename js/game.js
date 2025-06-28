@@ -26,6 +26,7 @@ const stageInfo = {
     },
   ],
   totalScore: 0,
+  callPosition: [1000, 2000, 3000],
 };
 
 const bulletComProp = {

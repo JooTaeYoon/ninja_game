@@ -2,16 +2,16 @@ class Stage {
   constructor() {
     this.isStart = false;
     this.level = 0;
-    this.stageStart();
+    // this.stageStart();
   }
 
-  stageStart() {
-    setTimeout(() => {
-      this.stageGuide(`START ${this.level}`);
-      this.callMonster();
-      this.isStart = true;
-    }, 2000);
-  }
+  // stageStart() {
+  //   setTimeout(() => {
+  //     this.stageGuide(`START ${this.level}`);
+  //     this.callMonster();
+  //     this.isStart = true;
+  //   }, 2000);
+  // }
 
   stageGuide(text) {
     this.parentNode = document.querySelector('.game_app');
@@ -43,18 +43,27 @@ class Stage {
   }
 
   clearCheck() {
-    if (allMonsterComProp.arr.length === 0 && this.isStart) {
-      this.isStart = false;
-      this.level++;
-
-      if (this.level < stageInfo.monster.length) {
-        this.stageGuide('CLEAR');
-        this.stageStart();
-        hero.heroUpgrade();
-      } else {
-        this.stageGuide('ALL CLEAR');
+    stageInfo.callPosition.forEach((arr) => {
+      if (hero.moveX >= arr && allMonsterComProp.arr.length === 0) {
+        this.stageGuide('곧 몬스터 나타남');
+        stageInfo.callPosition.shift();
+        setTimeout(() => {
+          this.callMonster();
+          this.level++;
+        }, 1000);
       }
-    }
+    });
+    // if (allMonsterComProp.arr.length === 0 && this.isStart) {
+    //   this.isStart = false;
+    //   this.level++;
+    //   if (this.level < stageInfo.monster.length) {
+    //     this.stageGuide('CLEAR');
+    //     this.stageStart();
+    //     hero.heroUpgrade();
+    //   } else {
+    //     this.stageGuide('ALL CLEAR');
+    //   }
+    // }
   }
 }
 
@@ -168,6 +177,7 @@ class Hero {
     }, 1000);
     this.updateExp(this.exp);
     this.heroUpgrade();
+    this.plusHp(this.defaultHpValue);
   }
 
   position() {
@@ -188,13 +198,22 @@ class Hero {
     };
   }
 
-  updateHp(damage) {
+  plusHp(hp) {
+    this.hpValue = hp;
+    this.renderHp();
+  }
+
+  minusHp(damage) {
     this.hpValue = Math.max(0, this.hpValue - damage);
+    this.renderHp();
+    this.crash();
+    if (this.hpProgress === 0) this.dead();
+  }
+
+  renderHp() {
     this.hpProgress = (this.hpValue / this.defaultHpValue) * 100;
     const heroHpBox = document.querySelector('.state_box .hp span');
     heroHpBox.style.width = this.hpProgress + '%';
-    this.crash();
-    if (this.hpProgress === 0) this.dead();
   }
 
   crash() {
@@ -274,7 +293,7 @@ class Bullet {
             bulletComProp.arr.splice(i, 1);
           }
         }
-        allMonsterComProp.arr[j].updateHp(j);
+        allMonsterComProp.arr[j].minusHp(j);
         this.damageView(allMonsterComProp.arr[j]);
       }
     }
@@ -359,7 +378,7 @@ class Monster {
     };
   }
 
-  updateHp(j) {
+  minusHp(j) {
     this.hpValue = Math.max(0, this.hpValue - hero.attackDamage);
     this.progress = (this.hpValue / this.defaultHpValue) * 100;
     this.el.children[0].children[0].style.width = this.progress + '%';
@@ -409,7 +428,7 @@ class Monster {
       hero.position().right - rightDiff > this.position().left &&
       hero.position().left + leftDiff < this.position().right
     ) {
-      hero.updateHp(this.crashDamage);
+      hero.minusHp(this.crashDamage);
     }
   }
 
