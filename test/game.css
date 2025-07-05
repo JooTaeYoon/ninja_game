@@ -110,3 +110,34 @@
   background-size: cover;
   z-index: 1000;
 }
+
+.monster {
+  background-image: url('../ggang_game/lib/images/monster.png');
+  width: 100%;
+}
+
+.monster {
+  height: 100%;
+  background-image: url('../ggang_game/lib/images/monster/monster_green_run.png');
+  background-size: 2242px 294px;
+  animation: monster_run 1s infinite steps(8);
+}
+
+/* .monster_box {
+  position: absolute;
+  left: 700px;
+  bottom: 0px;
+  z-index: 90;
+  width: 280px;
+  height: 294px;
+  will-change: transform;
+} */
+
+@keyframes monster_run {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position-x: -2242px;
+  }
+}
