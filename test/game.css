@@ -1,0 +1,112 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.game_app {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  min-width: 1280px;
+}
+
+.hero {
+  border: 1px solid red;
+}
+
+.sky {
+  background-image: url('../ggang_game/lib/images/bg_top.png');
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-repeat: repeat-x;
+  background-size: cover;
+  z-index: 1;
+}
+
+.game_app .game {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 70000px;
+  height: 100%;
+  background-image: url('../ggang_game/lib/images/bg_bottom.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+@keyframes hero_idle {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -1498px;
+  }
+}
+
+.hero_box {
+  /* position: fixed; */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 150px;
+  height: 182px;
+  will-change: transform;
+}
+
+.hero {
+  background-image: url('../ggang_game/lib/images/ninja_idle.png');
+  z-index: 100;
+  background-size: 1498px 182px;
+  height: 100%;
+  animation: hero_idle 0.7s infinite steps(10);
+}
+
+@keyframes hero_run {
+  from {
+    background-position-x: 0p;
+  }
+  to {
+    background-position-x: -1498px;
+  }
+}
+
+.hero_run {
+  background-image: url('../ggang_game/lib/images/ninja_run.png');
+  height: 100%;
+  animation: hero_run 0.7s infinite steps(10);
+  background-size: 1498px 182px;
+}
+
+.attack {
+  background-image: url('../ggang_game/lib/images/ninja_attack.png');
+  height: 100%;
+  background-size: 1498px 182px;
+  animation: hero_attack 0.5s 1 steps(10);
+}
+
+@keyframes hero_attack {
+  from {
+    background-position-x: 0p;
+  }
+  to {
+    background-position-x: -1498px;
+  }
+}
+
+.arrow {
+  position: absolute;
+  width: 120px;
+  height: 24px;
+  position: absolute;
+  left: 0;
+  /* bottom: 0; */
+  background-image: url('../ggang_game/lib/images/hero_bullet.png');
+  background-size: cover;
+  z-index: 1000;
+}
